@@ -9,34 +9,43 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // MARK: State objects
     @StateObject private var vm = ContactsViewModel()
+    
+    // MARK: UI constants
+    private let navigationTopBarItemTitle = "Contacte"
+    private let sectionName = "CONTACTELE MELE"
+    private let initialsFrameSize = 40.0
+    private let imageFrameSize = 50.0
+    private let textPadding = 5.0
+    private let colorOpacity = 0.3
     
     var body: some View {
         NavigationStack {
             List {
-                Section("CONTACTELE MELE") {
+                Section(sectionName) {
                     ForEach(vm.contacts, id: \.self) { contact in
                         NavigationLink(value: contact) {
                             HStack {
                                 if contact.id % 2 == 0 {
-                                    Text("\(self.returnNameInitialsFrom(name: contact.name))")
-                                        .frame(width: 40, height: 40)
+                                    Text("\(self.returnInitialsFrom(name: contact.name))")
+                                        .frame(width: initialsFrameSize, height: initialsFrameSize)
                                         .foregroundStyle(.white)
-                                        .padding(5)
-                                        .background(.gray.opacity(0.3))
+                                        .padding(textPadding)
+                                        .background(.gray.opacity(colorOpacity))
                                         .clipShape(Circle())
                                 } else {
                                     AsyncImage(url: URL(string: vm.imageURL)) { image in
                                         image
                                             .resizable()
-                                            .frame(width: 50, height: 50)
+                                            .frame(width: imageFrameSize, height: imageFrameSize)
                                             .clipShape(Circle())
                                     } placeholder: {
                                         ProgressView()
                                     }
                                 }
                                 Text("\(contact.name)")
-                                    .padding(.leading, 10)
+                                    .padding(.leading, 2 * textPadding)
                             }
                             .ignoresSafeArea(.container, edges: [.leading])
                         }
@@ -51,7 +60,7 @@ struct ContentView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Contacte")
+                    Text(navigationTopBarItemTitle)
                         .bold()
                         .font(.title)
                 }
@@ -65,12 +74,15 @@ struct ContentView: View {
                 }
             }
         }
-        .task {
-            await vm.fetchContacts()
+        .onAppear {
+            vm.fetchContacts()
         }
     }
     
-    private func returnNameInitialsFrom(name: String) -> String {
+    /// Returns a string with the initials of a person's name.
+    /// - Parameter name: String type that contains at least one substring separated only by space.
+    /// - Returns: The string that contains only the first characters of each substring.
+    private func returnInitialsFrom(name: String) -> String {
         return name.split(separator: " ")
             .map { $0.prefix(1) }
             .joined()
