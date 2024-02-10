@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var vm = ContactsViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(vm.contacts) { contact in
+                
+            }
         }
-        .padding()
+        .navigationTitle("Contacte")
+        .task {
+            await vm.fetchContacts()
+        }
     }
 }
 

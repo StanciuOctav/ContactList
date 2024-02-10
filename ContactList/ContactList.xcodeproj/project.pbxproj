@@ -11,6 +11,8 @@
 		D434BB8D2B775E1000CDCBC2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434BB8C2B775E1000CDCBC2 /* ContentView.swift */; };
 		D434BB8F2B775E1100CDCBC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D434BB8E2B775E1100CDCBC2 /* Assets.xcassets */; };
 		D434BB922B775E1100CDCBC2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D434BB912B775E1100CDCBC2 /* Preview Assets.xcassets */; };
+		D434BB9B2B775EDF00CDCBC2 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434BB9A2B775EDF00CDCBC2 /* ContactsViewModel.swift */; };
+		D434BB9D2B775F0400CDCBC2 /* PersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434BB9C2B775F0400CDCBC2 /* PersonModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		D434BB8C2B775E1000CDCBC2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D434BB8E2B775E1100CDCBC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D434BB912B775E1100CDCBC2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D434BB9A2B775EDF00CDCBC2 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		D434BB9C2B775F0400CDCBC2 /* PersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 				D434BB8C2B775E1000CDCBC2 /* ContentView.swift */,
 				D434BB8E2B775E1100CDCBC2 /* Assets.xcassets */,
 				D434BB902B775E1100CDCBC2 /* Preview Content */,
+				D434BB9A2B775EDF00CDCBC2 /* ContactsViewModel.swift */,
+				D434BB9C2B775F0400CDCBC2 /* PersonModel.swift */,
 			);
 			path = ContactList;
 			sourceTree = "<group>";
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D434BB9D2B775F0400CDCBC2 /* PersonModel.swift in Sources */,
 				D434BB8D2B775E1000CDCBC2 /* ContentView.swift in Sources */,
+				D434BB9B2B775EDF00CDCBC2 /* ContactsViewModel.swift in Sources */,
 				D434BB8B2B775E1000CDCBC2 /* ContactListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
