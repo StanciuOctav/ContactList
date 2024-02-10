@@ -11,6 +11,7 @@ struct ContentView: View {
     
     // MARK: State objects
     @StateObject private var vm = ContactsViewModel()
+    @State private var showNoContactsError: Bool = false
     
     // MARK: UI constants
     private let navigationTopBarItemTitle = "Contacte"
@@ -22,60 +23,72 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List {
-                Section(sectionName) {
-                    ForEach(vm.contacts, id: \.self) { contact in
-                        NavigationLink(value: contact) {
-                            HStack {
-                                if contact.id % 2 == 0 {
-                                    Text("\(self.returnInitialsFrom(name: contact.name))")
-                                        .frame(width: initialsFrameSize, height: initialsFrameSize)
-                                        .foregroundStyle(.white)
-                                        .padding(textPadding)
-                                        .background(.gray.opacity(colorOpacity))
-                                        .clipShape(Circle())
-                                } else {
-                                    AsyncImage(url: URL(string: vm.imageURL)) { image in
-                                        image
-                                            .resizable()
-                                            .frame(width: imageFrameSize, height: imageFrameSize)
+            if vm.contacts.isEmpty {
+                if showNoContactsError {
+                    ContentUnavailableView("There are no contacts at the specified URL.", systemImage: "exclamationmark.triangle.fill")
+                } else { ProgressView() }
+            } else {
+                List {
+                    Section(sectionName) {
+                        ForEach(vm.contacts, id: \.self) { contact in
+                            NavigationLink(value: contact) {
+                                HStack {
+                                    if contact.id % 2 == 0 {
+                                        Text("\(self.returnInitialsFrom(name: contact.name))")
+                                            .frame(width: initialsFrameSize, height: initialsFrameSize)
+                                            .foregroundStyle(.white)
+                                            .padding(textPadding)
+                                            .background(.gray.opacity(colorOpacity))
                                             .clipShape(Circle())
-                                    } placeholder: {
-                                        ProgressView()
+                                    } else {
+                                        AsyncImage(url: URL(string: vm.imageURL)) { image in
+                                            image
+                                                .resizable()
+                                                .frame(width: imageFrameSize, height: imageFrameSize)
+                                                .clipShape(Circle())
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
                                     }
+                                    Text("\(contact.name)")
+                                        .padding(.leading, 2 * textPadding)
                                 }
-                                Text("\(contact.name)")
-                                    .padding(.leading, 2 * textPadding)
+                                .ignoresSafeArea(.container, edges: [.leading])
                             }
-                            .ignoresSafeArea(.container, edges: [.leading])
                         }
+                        
                     }
                 }
-            }
-            .navigationDestination(for: PersonModel.self) { person in
-                VStack {
-                    // View to display more info about the person
+                .navigationDestination(for: PersonModel.self) { person in
+                    VStack {
+                        // View to display more info about the person
+                    }
+                    .navigationTitle("\(person.name)")
                 }
-                .navigationTitle("\(person.name)")
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(navigationTopBarItemTitle)
-                        .bold()
-                        .font(.title)
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        // TODO: Maybe add a new person?
-                    } label: {
-                        Image(systemName: "person.fill.badge.plus")
-                            .foregroundStyle(.gray)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text(navigationTopBarItemTitle)
+                            .bold()
+                            .font(.title)
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            // TODO: Maybe add a new person?
+                        } label: {
+                            Image(systemName: "person.fill.badge.plus")
+                                .foregroundStyle(.gray)
+                        }
                     }
                 }
             }
         }
         .onAppear {
             vm.fetchContacts()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                withAnimation {
+                    self.showNoContactsError.toggle()
+                }
+            }
         }
     }
     
