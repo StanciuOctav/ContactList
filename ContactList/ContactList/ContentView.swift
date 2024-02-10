@@ -13,11 +13,22 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List(vm.contacts) { contact in
-                
+            List {
+                Section("CONTACTELE MELE") {
+                    ForEach(vm.contacts, id: \.self) { contact in
+                        HStack {
+                            //                    if contact.id % 2 == 0 {
+                            Text("\(contact.name)")
+                            //                    } else {
+                            //                        Text("\(contact.email)")
+                            //                    }
+                        }
+                    }
+                }
             }
+            .navigationTitle("Contacte")
+            .navigationBarTitleDisplayMode(.large)
         }
-        .navigationTitle("Contacte")
         .task {
             await vm.fetchContacts()
         }

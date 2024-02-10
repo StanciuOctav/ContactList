@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-struct PersonModel: Identifiable {
+struct PersonModel: Codable, Identifiable, Hashable {
     var id: Int = 0
     var name: String = ""
     var email: String = ""
     var gender: String = ""
     var status: String = ""
+    var isInactive: Bool {
+        get { status == "inactive" }
+    }
 }
