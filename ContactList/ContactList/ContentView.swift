@@ -19,7 +19,7 @@ struct ContentView: View {
     private let initialsFrameSize = 40.0
     private let imageFrameSize = 50.0
     private let textPadding = 5.0
-    private let colorOpacity = 0.3
+    private let colorOpacity = 0.4
     
     var body: some View {
         NavigationStack {
@@ -77,6 +77,12 @@ struct ContentView: View {
                         } label: {
                             Image(systemName: "person.fill.badge.plus")
                                 .foregroundStyle(.gray)
+                                .padding(textPadding)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(.gray.opacity(0.2), lineWidth: 2)
+                                    )
                         }
                     }
                 }
